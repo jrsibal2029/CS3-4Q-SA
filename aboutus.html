@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Atelier Verne</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond&family=Jost&display=swap" rel="stylesheet">
+
+  <style>
+
+    :root {
+      --forest:#2a4f3e;
+      --cream:#f5f0ec;
+      --brown:#8b6347;
+      --brown-lt:#c4a882;
+      --brown-dk:#5c3d24;
+      --warm-mid:#d6c4ae;
+      --text:#2b2018;
+    }
+
+
+    body {
+      background-color: var(--cream);
+      color: var(--text);
+      font-family: 'Jost', sans-serif;
+      padding-top: 90px;
+    }
+
+    header {
+      background-color: var(--forest);
+      color: #e8dfd5;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 9999;
+    }
+
+    header a {
+      text-decoration: none;
+      color: #e8dfd5;
+      padding: 6px;
+      transition: 0.3s;
+    }
+
+    header a:hover {
+      color: var(--brown-lt);
+    }
+
+    h1 {
+      text-align: center;
+      font-family: 'Cormorant Garamond', serif;
+      margin-bottom: 3rem;
+      letter-spacing: 0.08em;
+    }
+
+    .h-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      max-width: 1100px;
+      margin: auto;
+      padding: 0 2rem 4rem;
+    }
+
+    .h-card {
+      background: #fff;
+      border: 1px solid #e8dfd5;
+      padding: 1.5rem;
+      transition: 0.3s;
+      text-align: center;
+    }
+
+    .h-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 40px rgba(42,79,62,0.12);
+    }
+
+    .h-card img {
+      width: 100%;
+      height: 250px;
+      object-fit: cover;
+      margin-bottom: 1rem;
+      background: #faf7f4;
+    }
+
+    .h-card h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.2rem;
+      color: var(--brown-dk);
+    }
+
+    .h-card p {
+      font-size: 0.8rem;
+      letter-spacing: 0.05em;
+      color: var(--brown);
+    }
+
+    footer {
+      background: var(--forest);
+      color: var(--warm-mid);
+      text-align: center;
+      padding: 2rem;
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+    }
+
+    @media (max-width: 900px) {
+      .h-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 580px) {
+      .h-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+
+<body class="pt-5 mt-5">
+
+<header class="nav py-3 px-4 d-flex container-fluid justify-content-between align-items-center fixed-top" style="background-color:#2a4f3e; font-family:'Cormorant Garamond', serif;">
+
+  <h1 class="m-0" style="color:#e8dfd5;">
+    Atelier Verne
+  </h1>
+
+  <div class="d-flex">
+    <a href="index.html" class="text-decoration-none" style="color:#e8dfd5;">
+      Home
+    </a>
+  </div>
+
+</header>
+
+<h1>The People Who Made It Possible</h1>
+
+<div class="h-grid">
+  <div class="h-card">
+    <img src="jamie.png" alt="jamie">
+    <h2>Jamie Sibal</h2>
+    <p>Developer, Researcher</p>
+  </div>
+
+  <div class="h-card">
+    <img src="sofia.png" alt="sofia">
+    <h2>Sofia Mozo</h2>
+    <p>Developer, Researcher</p>
+  </div>
+
+  <div class="h-card">
+    <img src="kirsten.png" alt="kirsten">
+    <h2>Kirsten Viray</h2>
+    <p>Developer, Researcher</p>
+  </div>
+</div>
+
+<footer>
+  &copy; 2026 Atelier Verne · Refined since always
+</footer>
+
+</body>
+</html>
