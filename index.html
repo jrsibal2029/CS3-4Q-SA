@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Atelier Verne</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Jost:wght@200;300;400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --forest:   #2a4f3e;
+      --cream:    #f5f0ec;
+      --brown:    #8b6347;
+      --brown-lt: #c4a882;
+      --brown-dk: #5c3d24;
+      --warm-mid: #d6c4ae;
+      --text:     #2b2018;
+    }
+
+    body {
+      background-color: var(--cream);
+      color: var(--text);
+      font-family: 'Jost', sans-serif;
+      font-weight: 300;
+      letter-spacing: 0.03em;
+      min-height: 100vh;
+    }
+
+    header {
+        background-color:#2a4f3e;
+        color:#e8dfd5;
+        position: fixed;
+        z-index: 9999;
+        font-family: "Cormorant Garamond", serif;
+    }
+
+    header a {
+        text-decoration: none;
+        color:#e8dfd5;
+        padding: 6px;
+        transition: color ease 0.3s;
+    }
+
+    header a:hover {
+        color:#c4a882;
+    }
+
+    .divider-line {
+      width: 48px;
+      height: 1px;
+      background: var(--brown-lt);
+      margin: 2rem 0 0;
+    }
+
+    .grid-section {
+      padding: 4rem 3rem 6rem;
+    }
+
+    .grid-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      margin-bottom: 2.5rem;
+      border-bottom: 1px solid var(--warm-mid);
+      padding-bottom: 1rem;
+    }
+
+    .grid-header h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 400;
+      font-size: 1.2rem;
+      letter-spacing: 0.1em;
+      color: var(--brown-dk);
+    }
+
+    .grid-header span {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--brown);
+    }
+
+    .shoe-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+    }
+
+    .shoe-card {
+      background: #fff;
+      border: 1px solid #e8dfd5;
+      display: flex;
+      flex-direction: column;
+      transition: box-shadow 0.3s, transform 0.3s;
+      overflow: hidden;
+    }
+
+    .shoe-card:hover {
+      box-shadow: 0 12px 40px rgba(42,79,62,0.12);
+      transform: translateY(-4px);
+    }
+
+    .card-img-wrap {
+      position: relative;
+      overflow: hidden;
+      aspect-ratio: 1/1;
+      background: #faf7f4;
+    }
+
+    .card-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.55s ease;
+      display: block;
+    }
+
+    .shoe-card:hover .card-img-wrap img {
+      transform: scale(1.05);
+    }
+
+    .card-tag {
+      position: absolute;
+      top: 1rem;
+      left: 1rem;
+      background: var(--forest);
+      color: var(--cream);
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      padding: 0.25rem 0.65rem;
+      z-index: 2;
+    }
+
+    .card-desc-overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(to top, rgba(42,79,62,0.93) 0%, rgba(42,79,62,0.5) 70%, transparent 100%);
+      color: var(--cream);
+      padding: 2rem 1.2rem 1.1rem;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.95rem;
+      font-style: italic;
+      font-weight: 300;
+      letter-spacing: 0.04em;
+      line-height: 1.45;
+      text-align: center;
+      opacity: 0;
+      transform: translateY(6px);
+      transition: opacity 0.38s ease, transform 0.38s ease;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .shoe-card:hover .card-desc-overlay {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .card-body {
+      padding: 1.4rem 1.5rem 1.6rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      flex: 1;
+    }
+
+    .card-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.15rem;
+      font-weight: 500;
+      line-height: 1.25;
+      color: var(--brown-dk);
+    }
+
+    .card-price {
+      font-size: 0.78rem;
+      letter-spacing: 0.12em;
+      color: var(--brown);
+      font-weight: 400;
+    }
+
+    .add-btn {
+      margin-top: auto;
+      padding-top: 1.1rem;
+      display: flex;
+    }
+
+    .add-btn button {
+      width: 100%;
+      background: var(--forest);
+      color: var(--cream);
+      border: none;
+      cursor: pointer;
+      font-family: 'Jost', sans-serif;
+      font-weight: 300;
+      font-size: 0.7rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      padding: 0.85rem 1rem;
+      transition: background 0.25s, letter-spacing 0.25s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .add-btn button:hover {
+      background: var(--brown-dk);
+      letter-spacing: 0.35em;
+    }
+
+    .add-btn button:active { transform: scale(0.98); }
+
+    .add-btn button.added {
+      background: var(--brown);
+      pointer-events: none;
+    }
+
+    #toast {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      background: var(--forest);
+      color: var(--cream);
+      font-size: 0.78rem;
+      letter-spacing: 0.1em;
+      padding: 0.85rem 1.5rem;
+      opacity: 0;
+      transform: translateY(12px);
+      transition: opacity 0.3s, transform 0.3s;
+      pointer-events: none;
+      z-index: 9999;
+      border-left: 3px solid var(--brown-lt);
+    }
+
+    #toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    footer {
+      background: var(--forest);
+      color: var(--warm-mid);
+      text-align: center;
+      padding: 2rem 3rem;
+      font-size: 0.68rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+    }
+
+    @media (max-width: 900px) {
+      .shoe-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 580px) {
+      .shoe-grid { grid-template-columns: 1fr; }
+      .grid-section { padding: 3rem 1.5rem 5rem; }
+    }
+  </style>
+</head>
+<body>
+
+      <header class="nav py-3 px-4 d-flex container-fluid justify-content-between">
+          <h1>Atelier Verne</h1>
+
+        <div class="opts d-flex justify-content-end">
+          <a href="#footwear">Shoes</a>
+          <a href="#tops">Tops</a>
+          <a href="#bags">Bags</a>
+          <a href="#pants">Pants</a>
+          <a href="#cart">Checkout</a>
+          <a href="aboutus.html">About Us</a>
+        </div>
+
+      </header>
+
+  <div id="collectionsContainer"></div>
+
+  <section id="cart" class="grid-section">
+  <div class="grid-header">
+    <h2>Checkout</h2>
+    <span>Finalize Order</span>
+  </div>
+
+  <div id="cartDisplay" class="mb-4"></div>
+
+  <form id="checkoutForm" method="POST" action="http://52.74.133.173/cs3/checkout.php">
+
+    <div class="mb-3">
+      <label>Name</label>
+      <input type="text" name="cust_name" class="form-control" required>
+    </div>
+
+    <div class="mb-3">
+      <label>Address</label>
+      <input type="text" name="cust_addr" class="form-control" required>
+    </div>
+
+    <div class="mb-3">
+      <label>Email</label>
+      <input type="email" name="cust_email" class="form-control" required pattern=".+@.+">
+    </div>
+
+    <input type="hidden" name="cust_order" id="cust_order">
+
+    <button type="submit" class="btn w-100" 
+      style="background: var(--forest); color: var(--cream); letter-spacing:0.2em;">
+      Checkout
+    </button>
+
+  </form>
+</section>
+
+  <footer>
+    &copy; 2026 Atelier Verne &nbsp;·&nbsp; Refined since always
+  </footer>
+
+  <div id="toast"></div>
+
+  <script>
+    const shoes = [
+      {
+        id: 1,
+        name: "Charms Walk Babouche",
+        price: 135147.00,
+        tag: "Signature",
+        desc: "A mule reborn — heritage silhouette, effortless modern stride.",
+        img: "https://media.loropiana.com/HYBRIS/FAM/FAM5312/C907337F-D544-48D0-83E7-E2FB24289E0F/FAM5312_2096_MEDIUM.jpg"
+      },
+      {
+        id: 2,
+        name: "Summer Charms Heeled Sandal",
+        price: 56904.00,
+        tag: "Summer",
+        desc: "Sunlit afternoons demand something worth looking down at.",
+        img: "https://media.loropiana.com/HYBRIS/FAI/FAI5579/F40254A8-2CD4-4A51-B0F6-DFA25BF2E568/FAI5579_Q0B2_MEDIUM.jpg"
+      },
+      {
+        id: 3,
+        name: "Summer Charms Flat Sandal",
+        price: 54058.80,
+        tag: "Summer",
+        desc: "Grace at ground level — the art of doing less, impeccably.",
+        img: "https://media.loropiana.com/HYBRIS/FAQ/FAQ6328/9B4DFD72-9D29-42E1-859A-EDC3096F921F/FAQ6328_B4AU_MEDIUM.jpg"
+      },
+      {
+        id: 4,
+        name: "Sergio Loafer",
+        price: 74686.50,
+        tag: "Classic",
+        desc: "Boardroom poise meets old-world craftsmanship, step by step.",
+        img: "https://media.loropiana.com/PRODUCTS/HYBRIS/FAO/FAO9641/H1D6/D1/2E499ED3-CF21-48D8-93B6-DDC28B7809FD_FAO9641_H1D6_MEDIUM.jpg"
+      },
+      {
+        id: 5,
+        name: "Sea-Sail Walk Loafer",
+        price: 63305.70,
+        tag: "Coastal",
+        desc: "Salt air and fine leather — a coastal morning well spent.",
+        img: "https://media.loropiana.com/HYBRIS/FAN/FAN1317/C13B7B6F-F9D8-4508-A682-4157C7FA1AB5/FAN1317_W000_MEDIUM.jpg"
+      },
+      {
+        id: 6,
+        name: "Sea Tennis Walk Sneaker",
+        price: 56192.70,
+        tag: "Sport",
+        desc: "The court never looked this composed — refined ease in motion.",
+        img: "https://media.loropiana.com/HYBRIS/FAP/FAP0014/7D544174-0157-4DDC-A32A-F5DD0C0F4B8F/FAP0014_A0F6_MEDIUM.jpg"
+      },
+      {
+        id: 7,
+        name: "Embroidered Short-Sleeved Shirt",
+        price: 89221.65,
+        tag: "Louis Vuitton",
+        desc: "Understated structure — the clothing that speaks without raising its voice.",
+        imgPos: "center 70%",
+        img: "https://us.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton-embroidered-short-sleeved-shirt---HVS21WUKY168_PM2_Front%20view.png?wid=1300&hei=1300"
+      },
+      {
+        id: 8,
+        name: "Coralline Shirt",
+        price: 82158.30,
+        tag: "Loro Piana",
+        desc: "Quiet tailoring — where simplicity carries its own authority.",
+        imgPos: "center center",
+        img: "https://media.loropiana.com/PRODUCTS/HYBRIS/FAQ/FAQ6577/60OB/FR/329759CF-9F07-43DA-A5AC-1BAA67E0F63C_FAQ6577_60OB_MEDIUM.jpg?sw=500&sh=700"
+      },
+      {
+        id: 9,
+        name: "Selena Shirt",
+        price: 100018.80,
+        tag: "Loro Piana",
+        desc: "Refined linen — a quiet confidence shaped in light and air.",
+        imgPos: "center center",
+        img: "https://media.loropiana.com/PRODUCTS/HYBRIS/FAQ/FAQ6583/30LW/FR/C9E7667B-D449-44C6-9523-CA6E55659A5C_FAQ6583_30LW_MEDIUM.jpg?sw=500&sh=700"
+      },
+      {
+        id: 10,
+        name: "Walkery Polo Shirt",
+        price: 71442.00,
+        tag: "Loro Piana",
+        desc: "Refined leisure — where impeccable craft meets a quiet, effortless ease.",
+        imgPos: "center center",
+        img: "https://media.loropiana.com/PRODUCTS/HYBRIS/FAM/FAM0531/60NP/FR/593E7AEF-BBF2-4D1C-AF28-FF0B1BF2917C_FAM0531_60NP_MEDIUM.jpg?sw=500&sh=700"
+      },
+      {
+        id: 11,
+        name: "Regatta Polo",
+        price: 41436.36,
+        tag: "Loro Piana",
+        desc: "Technical precision — where performance-driven design achieves a seamless, elevated aesthetic.",
+        imgPos: "center center",
+        img: "https://media.loropiana.com/PRODUCTS/HYBRIS/FAI/FAI0485/H1A0/FR/F5E45300-D70C-4A10-B21F-73A1C752FCA2_FAI0485_H1A0_MEDIUM.jpg?sw=500&sh=700"
+      },
+      {
+        id: 12,
+        name: "Brentwood Polo",
+        price: 41436.36,
+        tag: "Loro Piana",
+        desc: "Understated utility — where heritage textures lend a sense of timeless resilience to modern structure.",
+        imgPos: "center center",
+        img: "https://media.loropiana.com/PRODUCTS/HYBRIS/FAI/FAI4903/WA67/FR/8E1577C1-0EBB-48D8-8FBD-E441F19343C5_FAI4903_WA67_MEDIUM.jpg?sw=500&sh=700"
+      },
+      {
+        id: 13,
+        name: "Extra Bag L27",
+        price: 248955.00,
+        tag: "Signature",
+        desc: "Understated structure — the bag that speaks without raising its voice.",
+        imgPos: "center 70%",
+        img: "https://media.loropiana.com/HYBRIS/FAO/FAO0981/42CD0FD3-7552-46E3-AB2D-CBADC1B05441/FAO0981_108U_MEDIUM.jpg"
+      },
+      {
+        id: 14,
+        name: "Extra Bag L27",
+        price: 248955.00,
+        tag: "Signature",
+        desc: "A second shade, a second story — same soul, new light.",
+        imgPos: "center bottom",
+        img: "https://media.loropiana.com/HYBRIS/FAP/FAP5283/B69ECDFE-44D8-4F84-9E3D-4E3B5EAF0388/FAP5283_B5CE_MEDIUM.jpg"
+      },
+      {
+        id: 15,
+        name: "Prada Buckle Suede Bag with Belt",
+        price: 473421.00,
+        tag: "Prada",
+        desc: "Buckled, belted, and boldly refined — suede softness with an iron will.",
+        imgPos: "center 50%",
+        img: "https://www.prada.com/content/dam/pradabkg_products/2/2VG/2VG126/2C4SF0003/2VG126_2C4S_F0003_V_OJO_SLF.jpg/_jcr_content/renditions/cq5dam.web.hebebed.1000.1000.jpg"
+      },
+      {
+        id: 16,
+        name: "Small Beam Tote",
+        price: 199164.00,
+        tag: "Tote",
+        desc: "Light as a promise, strong as habit — your everyday elevated.",
+        imgPos: "center bottom",
+        img: "https://media.loropiana.com/HYBRIS/FAO/FAO4357/CA98D6C2-3643-4270-8498-DF9D8FFF0BA0/FAO4357_804M_MEDIUM.jpg"
+      },
+      {
+        id: 17,
+        name: "Georges Tote MM",
+        price: 643367.00,
+        tag: "Louis Vuitton",
+        desc: "Monogram heritage reimagined — presence that enters a room first.",
+        imgPos: "center bottom",
+        img: "https://us.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton-georges-tote-mm--M23153_PM1_Worn%20view.png?wid=1090&hei=1090"
+      },
+      {
+        id: 18,
+        name: "Loom Bag L25",
+        price: 312972.00,
+        tag: "Artisan",
+        desc: "Woven with patience, worn with grace — craft you can feel.",
+        imgPos: "center top",
+        img: "https://media.loropiana.com/PRODUCTS/HYBRIS/FAR/FAR0712/F7ZK/L1/7A2F59A6-7DEA-43FE-9DAC-4FFDA5FA89C1_FAR0712_F7ZK_MEDIUM.jpg"
+      },
+      {
+        id: 19,
+        name: "Signature Cargo Pants",
+        price: 89221.65,
+        tag: "Louis Vuitton",
+        desc: "Beige carpenter pants in soft cotton twill with a Monogram-embossed patch pocket and signature rivets.",
+        imgPos: "center bottom",
+        img: "https://eu.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton-signature-cargo-pants--HVP40WL04151_PM2_Front%20view.png?wid=1300&hei=1300"
+      },
+      {
+        id: 20,
+        name: "Greer Cady Pleated Pant",
+        price: 138991.55,
+        tag: "Ralph Lauren",
+        desc: "Crafted from smooth viscose cady, the Greer pant features inverted pleats and a high-rise wide-leg silhouette.",
+        imgPos: "center bottom",
+        img: "https://dtcralphlauren.scene7.com/is/image/PoloGSI/s7-AI290P10219001_alternate1?$rl_4x5_zoom$"
+      },
+      {
+        id: 21,
+        name: "Hector Trousers",
+        price: 207181.80,
+        tag: "Loro Piana",
+        desc: "Pure indulgence — where the world's finest fibers create a silhouette of effortless, tactile warmth.",
+        imgPos: "center top",
+        img: "https://media.loropiana.com/PRODUCTS/HYBRIS/FAQ/FAQ9439/A0PJ/FR/3D33CF17-D6E1-498E-9C53-1E275CA2A715_FAQ9439_A0PJ_MEDIUM.jpg?sw=500&sh=700"
+      },
+      {
+        id: 22,
+        name: "Goldie Trousers",
+        price: 103590.90,
+        tag: "Loro Piana",
+        desc: "Artisanal comfort — where relaxed lines and superior softness redefine the everyday essential.",
+        imgPos: "center top",
+        img: "https://media.loropiana.com/PRODUCTS/HYBRIS/FAQ/FAQ6670/60OB/FR/57C95FFA-6F75-4579-96B3-A3258B0E2173_FAQ6670_60OB_MEDIUM.jpg?sw=500&sh=700"
+      },
+      {
+        id: 23,
+        name: "Kenith Loro Piana Royal Lightness® Trousers",
+        price: 292912.20,
+        tag: "Loro Piana",
+        desc: "Sovereign softness — where rich textures and classic forms command attention through pure composure.",
+        imgPos: "center top",
+        img: "https://media.loropiana.com/PRODUCTS/HYBRIS/FAQ/FAQ6304/1230/FR/C3F82507-684A-4C34-9020-47EDFAE8896A_FAQ6304_1230_MEDIUM.jpg?sw=500&sh=700"
+      },
+      {
+        id: 24,
+        name: "Loro Piana Royal Lightness® Trousers",
+        price: 214326.00,
+        tag: "Loro Piana",
+        desc: "Subtle structure — where architectural precision meets the fluid drape of natural fibers.",
+        imgPos: "center top",
+        img: "https://media.loropiana.com/PRODUCTS/HYBRIS/FAP/FAP0149/30LZ/FR/BA19D678-1CA7-4B75-A2BA-88F21FE47052_FAP0149_30LZ_MEDIUM.jpg?sw=500&sh=700"
+      },
+    ];
+
+    const collections = [
+      { title: "Footwear Collection", ids: [1, 2, 3, 4, 5, 6] },
+      { title: "Tops Collection",     ids: [7, 8, 9, 10, 11, 12] },
+      { title: "Bags Collection",     ids: [13, 14, 15, 16, 17, 18] },
+      { title: "Pants Collection",    ids: [19, 20, 21, 22, 23, 24] },
+    ];
+
+    function formatPrice(amount) {
+      return "PHP " + amount.toLocaleString('en-PH', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    }
+
+    function loadCart() {
+      const raw = localStorage.getItem('cart');
+      return raw ? JSON.parse(raw) : [];
+    }
+
+    function saveCart(cartItems) {
+      localStorage.setItem('cart', JSON.stringify(cartItems));
+    }
+
+    function updateBadge() {}
+
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      toast.textContent = msg;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 2500);
+    }
+
+    function addToCart(shoe, btn) {
+      const cartItems = loadCart();
+      cartItems.push({ prod_name: shoe.name, prod_price: shoe.price });
+      saveCart(cartItems);
+      updateBadge();
+      showToast(shoe.name + " added to cart");
+      btn.textContent = "Added ✓";
+      btn.classList.add('added');
+      setTimeout(() => {
+        btn.textContent = "Add to Cart";
+        btn.classList.remove('added');
+      }, 2200);
+    }
+
+    function addToCart(shoe, btn) {
+  const cartItems = loadCart();
+  cartItems.push({ prod_name: shoe.name, prod_price: shoe.price });
+  saveCart(cartItems);
+  updateBadge();
+  showToast(shoe.name + " added to cart");
+  btn.textContent = "Added ✓";
+  btn.classList.add('added');
+
+  setTimeout(() => {
+    btn.textContent = "Add to Cart";
+    btn.classList.remove('added');
+  }, 2200);
+
+  renderCart(); 
+}
+
+
+function renderCart() {
+  const cart = loadCart();
+  const container = document.getElementById('cartDisplay');
+
+  if (!container) return;
+
+  if (cart.length === 0) {
+    container.innerHTML = "<p>Your cart is empty.</p>";
+    return;
+  }
+
+  let total = 0;
+  container.innerHTML = "";
+
+  cart.forEach((item, index) => {
+    total += item.prod_price;
+
+    const row = document.createElement('div');
+    row.style.display = "flex";
+    row.style.justifyContent = "space-between";
+    row.style.marginBottom = "10px";
+
+    row.innerHTML = `
+      <span>${item.prod_name} - PHP ${item.prod_price.toLocaleString()}</span>
+      <button data-index="${index}" style="background:var(--brown); color:white; border:none; padding:5px 10px;">Remove</button>
+    `;
+
+    container.appendChild(row);
+  });
+
+  const totalRow = document.createElement('div');
+  totalRow.style.marginTop = "15px";
+  totalRow.innerHTML = `<strong>Total: PHP ${total.toLocaleString()}</strong>`;
+  container.appendChild(totalRow);
+
+  container.querySelectorAll('button').forEach(btn => {
+    btn.addEventListener('click', function() {
+      removeFromCart(this.dataset.index);
+    });
+  });
+}
+
+function removeFromCart(index) {
+  const cart = loadCart();
+  cart.splice(index, 1);
+  saveCart(cart);
+  renderCart();
+}
+
+
+    function renderCollections() {
+      const container = document.getElementById('collectionsContainer');
+
+      collections.forEach(col => {
+        const items = shoes.filter(s => col.ids.includes(s.id));
+
+        const section = document.createElement('section');
+        section.className = 'grid-section';
+        section.id = col.title.toLowerCase().split(" ")[0]; 
+
+        const header = document.createElement('div');
+        header.className = 'grid-header';
+        header.innerHTML = `
+          <h2>${col.title}</h2>
+          <span>${items.length} Pieces</span>
+        `;
+        section.appendChild(header);
+
+        const grid = document.createElement('div');
+        grid.className = 'shoe-grid';
+
+        items.forEach(shoe => {
+          const imgPosition = shoe.imgPos || 'center bottom';
+
+          const card = document.createElement('div');
+          card.className = 'shoe-card';
+          card.innerHTML = `
+            <div class="card-img-wrap">
+              <img src="${shoe.img}" alt="${shoe.name}" loading="lazy" style="object-position: ${imgPosition};" />
+              <span class="card-tag">${shoe.tag}</span>
+              <div class="card-desc-overlay">${shoe.desc}</div>
+            </div>
+            <div class="card-body">
+              <p class="card-name">${shoe.name}</p>
+              <p class="card-price">${formatPrice(shoe.price)}</p>
+              <div class="add-btn">
+                <button>Add to Cart</button>
+              </div>
+            </div>
+          `;
+          const btn = card.querySelector('button');
+          btn.addEventListener('click', () => addToCart(shoe, btn));
+          grid.appendChild(card);
+        });
+
+        section.appendChild(grid);
+        container.appendChild(section);
+      });
+    }
+
+    renderCollections();
+    updateBadge();
+    renderCart();
+
+    document.getElementById('checkoutForm').addEventListener('submit', function(e) {
+
+  const cartItems = loadCart(); 
+
+  if (cartItems.length === 0) {
+    e.preventDefault();
+    alert("Your cart is empty.");
+    return;
+  }
+
+  document.getElementById('cust_order').value = JSON.stringify(cartItems);
+});
+  </script>
+</body>
+</html>
